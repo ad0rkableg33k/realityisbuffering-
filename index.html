@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reality is Buffering | BY:G33KY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Share+Tech+Mono&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #ff2d78;
+    --pink-glow: #ff2d7888;
+    --purple: #9b30ff;
+    --purple-dark: #4a0080;
+    --bg: #0a0008;
+    --bg2: #0f000d;
+    --surface: #15001a;
+    --surface2: #1e0028;
+    --text: #f0d0f8;
+    --text-dim: #9070a0;
+    --green-hair: #39ff14;
+    --white: #ffffff;
+    --tab-active-bg: #ff2d7822;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,0,8,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--pink);
+    box-shadow: 0 0 20px var(--pink-glow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--pink);
+    text-shadow: 0 0 12px var(--pink);
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--pink);
+    border-color: var(--pink);
+    text-shadow: 0 0 8px var(--pink);
+    background: var(--tab-active-bg);
+  }
+
+  /* ── HERO BANNER ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    max-height: 420px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hero-fallback {
+    width: 100%;
+    min-height: 280px;
+    background: linear-gradient(135deg, #0a0008 0%, #1a0030 40%, #0f000d 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 12vw, 8rem);
+    line-height: 0.9;
+    color: var(--white);
+    text-shadow:
+      0 0 20px var(--pink),
+      0 0 60px var(--pink-glow),
+      4px 4px 0 var(--purple-dark);
+    letter-spacing: 4px;
+  }
+
+  .hero-title span {
+    color: var(--pink);
+    display: block;
+    font-size: 0.45em;
+    letter-spacing: 8px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.2rem, 4vw, 2.5rem);
+    color: var(--purple);
+    text-shadow: 0 0 15px var(--purple);
+    letter-spacing: 6px;
+    margin-top: 0.5rem;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, var(--bg) 100%);
+    pointer-events: none;
+  }
+
+  /* ── SECTION HEADING ── */
+  .section-heading {
+    text-align: center;
+    padding: 2.5rem 1rem 1rem;
+  }
+
+  .section-heading h2 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
+    color: var(--pink);
+    text-shadow: 0 0 20px var(--pink-glow), 3px 3px 0 var(--purple-dark);
+    letter-spacing: 2px;
+  }
+
+  /* ── ISSUE TABS ── */
+  .issue-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-bottom: 2px solid var(--pink);
+    margin: 1rem 1rem 0;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--pink) var(--bg2);
+  }
+
+  .issue-tab {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(0.7rem, 2.5vw, 1rem);
+    letter-spacing: 1.5px;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: none;
+    border-top: 2px solid transparent;
+    border-left: 1px solid var(--surface2);
+    border-right: 1px solid var(--surface2);
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -2px;
+  }
+
+  .issue-tab:hover {
+    color: var(--pink);
+    background: var(--tab-active-bg);
+  }
+
+  .issue-tab.active {
+    color: var(--pink);
+    background: var(--surface);
+    border-top: 2px solid var(--pink);
+    border-bottom: 2px solid var(--surface);
+    text-shadow: 0 0 8px var(--pink);
+  }
+
+  /* ── COMIC READER ── */
+  .reader-wrap {
+    margin: 0 1rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--surface2);
+    border-top: none;
+    min-height: 300px;
+  }
+
+  .issue-panel {
+    display: none;
+    padding: 1.5rem;
+  }
+
+  .issue-panel.active {
+    display: block;
+  }
+
+  /* Issue banner / cover area */
+  .issue-header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .issue-cover {
+    width: 160px;
+    flex-shrink: 0;
+    border: 2px solid var(--pink);
+    box-shadow: 0 0 20px var(--pink-glow);
+  }
+
+  .issue-cover img {
+    width: 100%;
+    display: block;
+  }
+
+  .issue-info h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: var(--pink);
+    text-shadow: 0 0 15px var(--pink-glow);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .issue-info p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  /* Pages grid / scroll */
+  .pages-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    color: var(--purple);
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid var(--surface2);
+    padding-bottom: 0.4rem;
+  }
+
+  .pages-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .page-img-wrap {
+    width: 100%;
+    max-width: 800px;
+    cursor: zoom-in;
+    position: relative;
+    border: 1px solid var(--surface2);
+    transition: border-color 0.2s;
+  }
+
+  .page-img-wrap:hover {
+    border-color: var(--pink);
+    box-shadow: 0 0 15px var(--pink-glow);
+  }
+
+  .page-img-wrap img {
+    width: 100%;
+    display: block;
+  }
+
+  .page-num {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--pink);
+    background: rgba(0,0,0,0.7);
+    padding: 2px 6px;
+  }
+
+  /* No pages yet message */
+  .no-pages {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  .no-pages span {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--purple);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.95);
+    cursor: zoom-out;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open {
+    display: flex;
+  }
+
+  .lightbox img {
+    max-width: 95vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 1px solid var(--pink);
+    box-shadow: 0 0 40px var(--pink-glow);
+    transition: transform 0.2s;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--pink);
+    cursor: pointer;
+    text-shadow: 0 0 10px var(--pink);
+    z-index: 1001;
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--pink);
+    cursor: pointer;
+    text-shadow: 0 0 10px var(--pink);
+    padding: 0.5rem 1rem;
+    background: rgba(0,0,0,0.5);
+    user-select: none;
+    z-index: 1001;
+    transition: background 0.2s;
+  }
+
+  .lightbox-nav:hover { background: rgba(255,45,120,0.2); }
+  .lightbox-nav.prev { left: 0; }
+  .lightbox-nav.next { right: 0; }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  /* ── GLITCH DECORATION ── */
+  .glitch-deco {
+    text-align: center;
+    padding: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--surface2);
+    letter-spacing: 3px;
+    user-select: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--surface2);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  footer a {
+    color: var(--pink);
+    text-decoration: none;
+  }
+
+  footer a:hover { text-shadow: 0 0 8px var(--pink); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 0.5rem 0.8rem; }
+    .issue-tabs { margin: 0.5rem 0.5rem 0; }
+    .reader-wrap { margin: 0 0.5rem 1.5rem; }
+    .issue-panel { padding: 1rem 0.8rem; }
+    .issue-cover { width: 100px; }
+    .lightbox-nav { font-size: 2rem; padding: 0.3rem 0.6rem; }
+  }
+
+  /* Pink glow pulse on active tab */
+  @keyframes tabPulse {
+    0%, 100% { text-shadow: 0 0 8px var(--pink); }
+    50% { text-shadow: 0 0 20px var(--pink), 0 0 40px var(--pink-glow); }
+  }
+
+  .issue-tab.active { animation: tabPulse 3s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">BY:G33KY</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">REALITY IS BUFFERING COMIC</a></li>
+    <li><a href="deck.html">UNSOLICITED DECK PICS</a></li>
+    <li><a href="font.html">FANCY FONT GENERATOR</a></li>
+    <li><a href="mizzverse.html">MIZZVERSE</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="images/banner.png" alt="Reality is Buffering" onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';">
+  <div class="hero-overlay"></div>
+</div>
+<div class="hero-fallback" id="hero-fallback" style="display:none;">
+  <div class="hero-title">Reality<span>×IS×</span>Buffering</div>
+  <div class="hero-subtitle">COMIC · BY:G33KY</div>
+</div>
+
+<!-- SECTION HEADING -->
+<div class="section-heading">
+  <h2>View Issues Below</h2>
+</div>
+
+<!-- ISSUE TABS -->
+<div class="issue-tabs" id="issueTabs">
+  <button class="issue-tab active" data-issue="character-lore">CHARACTER LORE</button>
+  <button class="issue-tab" data-issue="issue1">#1 DRAGONFORM.EXE</button>
+  <button class="issue-tab" data-issue="issue2">#2 GHOSTMODE</button>
+  <button class="issue-tab" data-issue="issue3">#3 LATE NIGHT SHENANIGANS</button>
+</div>
+
+<!-- READER -->
+<div class="reader-wrap">
+
+  <!-- CHARACTER LORE -->
+  <div class="issue-panel active" id="panel-character-lore">
+    <div class="issue-header">
+      <div class="issue-cover">
+        <img src="images/character-lore/cover.jpg" alt="Character Lore Cover"
+          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
+      </div>
+      <div class="issue-info">
+        <h3>Character Lore</h3>
+        <p>Meet the cast. The lore. The chaos. Dive into the backstories of the characters that make up the Reality is Buffering universe.</p>
+      </div>
+    </div>
+    <div class="pages-label">// PAGES</div>
+    <div class="pages-container" id="pages-character-lore">
+      <!-- Pages are loaded dynamically -->
+    </div>
+  </div>
+
+  <!-- ISSUE 1 -->
+  <div class="issue-panel" id="panel-issue1">
+    <div class="issue-header">
+      <div class="issue-cover">
+        <img src="images/issue1-dragonform/cover.jpg" alt="Issue 1 Cover"
+          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
+      </div>
+      <div class="issue-info">
+        <h3>#1 Dragonform.exe</h3>
+        <p>The first issue. Where it all begins. System loading... dragonform activated.</p>
+      </div>
+    </div>
+    <div class="pages-label">// PAGES</div>
+    <div class="pages-container" id="pages-issue1"></div>
+  </div>
+
+  <!-- ISSUE 2 -->
+  <div class="issue-panel" id="panel-issue2">
+    <div class="issue-header">
+      <div class="issue-cover">
+        <img src="images/issue2-ghostmode/cover.jpg" alt="Issue 2 Cover"
+          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
+      </div>
+      <div class="issue-info">
+        <h3>#2 Ghostmode</h3>
+        <p>She went ghost. No signal. No trace. Just vibes and static.</p>
+      </div>
+    </div>
+    <div class="pages-label">// PAGES</div>
+    <div class="pages-container" id="pages-issue2"></div>
+  </div>
+
+  <!-- ISSUE 3 -->
+  <div class="issue-panel" id="panel-issue3">
+    <div class="issue-header">
+      <div class="issue-cover">
+        <img src="images/issue3-latenightshenanigans/cover.jpg" alt="Issue 3 Cover"
+          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
+      </div>
+      <div class="issue-info">
+        <h3>#3 Late Night Shenanigans</h3>
+        <p>3am hits different. The chaos has a schedule and it runs all night.</p>
+      </div>
+    </div>
+    <div class="pages-label">// PAGES</div>
+    <div class="pages-container" id="pages-issue3"></div>
+  </div>
+
+</div>
+
+<div class="glitch-deco">// N0_GL1TCH_JUST_V1BES //</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© BY:G33KY · <a href="https://realityisbuffering.weebly.com" target="_blank">WEEBLY</a> · REALITY IS BUFFERING</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lbClose">✕</span>
+  <span class="lightbox-nav prev" id="lbPrev">‹</span>
+  <img src="" alt="" id="lbImg">
+  <span class="lightbox-nav next" id="lbNext">›</span>
+  <span class="lightbox-counter" id="lbCounter"></span>
+</div>
+
+<script>
+  // ── COMIC DATA ──
+  // Edit this object to add/remove pages.
+  // For each issue, list the page image paths in order.
+  // Use relative paths from the repo root.
+  const COMIC_DATA = {
+    'character-lore': {
+      folder: 'images/character-lore',
+      pages: [
+        'page1.jpg',
+        'page2.jpg',
+        'page3.jpg',
+        // Add more pages here: 'page4.jpg', etc.
+      ]
+    },
+    'issue1': {
+      folder: 'images/issue1-dragonform',
+      pages: [
+        'page1.jpg',
+        'page2.jpg',
+        'page3.jpg',
+      ]
+    },
+    'issue2': {
+      folder: 'images/issue2-ghostmode',
+      pages: [
+        'page1.jpg',
+        'page2.jpg',
+        'page3.jpg',
+      ]
+    },
+    'issue3': {
+      folder: 'images/issue3-latenightshenanigans',
+      pages: [
+        'page1.jpg',
+        'page2.jpg',
+        'page3.jpg',
+      ]
+    }
+  };
+
+  // ── RENDER PAGES ──
+  function renderPages() {
+    for (const [issueKey, data] of Object.entries(COMIC_DATA)) {
+      const container = document.getElementById('pages-' + issueKey);
+      if (!container) continue;
+      container.innerHTML = '';
+
+      if (!data.pages || data.pages.length === 0) {
+        container.innerHTML = '<div class="no-pages"><span>LOADING...</span>Pages coming soon. Check back.</div>';
+        continue;
+      }
+
+      data.pages.forEach((page, i) => {
+        const src = data.folder + '/' + page;
+        const wrap = document.createElement('div');
+        wrap.className = 'page-img-wrap';
+        wrap.dataset.issue = issueKey;
+        wrap.dataset.index = i;
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = 'Page ' + (i + 1);
+        img.loading = 'lazy';
+        img.onerror = function() {
+          wrap.style.display = 'none';
+        };
+
+        const num = document.createElement('span');
+        num.className = 'page-num';
+        num.textContent = 'pg.' + String(i + 1).padStart(2, '0');
+
+        wrap.appendChild(img);
+        wrap.appendChild(num);
+        wrap.addEventListener('click', () => openLightbox(issueKey, i));
+        container.appendChild(wrap);
+      });
+    }
+  }
+
+  // ── TABS ──
+  const tabs = document.querySelectorAll('.issue-tab');
+  const panels = document.querySelectorAll('.issue-panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.issue).classList.add('active');
+    });
+  });
+
+  // ── LIGHTBOX ──
+  let lbIssue = null;
+  let lbIndex = 0;
+
+  function openLightbox(issueKey, index) {
+    lbIssue = issueKey;
+    lbIndex = index;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateLightbox() {
+    const data = COMIC_DATA[lbIssue];
+    const src = data.folder + '/' + data.pages[lbIndex];
+    document.getElementById('lbImg').src = src;
+    document.getElementById('lbCounter').textContent =
+      (lbIndex + 1) + ' / ' + data.pages.length;
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  });
+
+  document.getElementById('lbPrev').addEventListener('click', e => {
+    e.stopPropagation();
+    const pages = COMIC_DATA[lbIssue].pages;
+    lbIndex = (lbIndex - 1 + pages.length) % pages.length;
+    updateLightbox();
+  });
+
+  document.getElementById('lbNext').addEventListener('click', e => {
+    e.stopPropagation();
+    const pages = COMIC_DATA[lbIssue].pages;
+    lbIndex = (lbIndex + 1) % pages.length;
+    updateLightbox();
+  });
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'ArrowRight') document.getElementById('lbNext').click();
+    if (e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Init
+  renderPages();
+</script>
+</body>
+</html>
