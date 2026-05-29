@@ -67,4 +67,4 @@ Comic reader site hosted via GitHub Pages.
 ---
 
 ## Live Site
-`https://yourusername.github.io/realityisbuffering`
+`https://ad0rkableg33k.github.io/realityisbuffering`
