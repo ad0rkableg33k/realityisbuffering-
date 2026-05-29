@@ -168,6 +168,25 @@
     pointer-events: none;
   }
 
+  .hero-extras {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0.8rem 1rem 0;
+    background: var(--bg);
+  }
+
+  .hero-extra-img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+  }
+
+  .hero-extra-img:hover { opacity: 1; }
+
   /* ── SECTION HEADING ── */
   .section-heading {
     text-align: center;
@@ -473,8 +492,13 @@
 
 <!-- HERO -->
 <div class="hero">
-  <img src="images/banner.png" alt="Reality is Buffering" onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';">
+  <img src="reality is buffering1.png" alt="Reality is Buffering" onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';">
   <div class="hero-overlay"></div>
+</div>
+<div class="hero-extras">
+  <img src="reality is buffering2.png" alt="Reality is Buffering 2" class="hero-extra-img" style="height:80px;">
+  <img src="character list.png" alt="Character List" class="hero-extra-img">
+  <img src="table of contents.png" alt="Table of Contents" class="hero-extra-img">
 </div>
 <div class="hero-fallback" id="hero-fallback" style="display:none;">
   <div class="hero-title">Reality<span>×IS×</span>Buffering</div>
@@ -501,7 +525,7 @@
   <div class="issue-panel active" id="panel-character-lore">
     <div class="issue-header">
       <div class="issue-cover">
-        <img src="images/character-lore/cover.jpg" alt="Character Lore Cover"
+        <img src="character list.png" alt="Character Lore Cover"
           onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
       </div>
       <div class="issue-info">
@@ -519,7 +543,7 @@
   <div class="issue-panel" id="panel-issue1">
     <div class="issue-header">
       <div class="issue-cover">
-        <img src="images/issue1-dragonform/cover.jpg" alt="Issue 1 Cover"
+        <img src="images/issue1-dragonform/covers.png" alt="Issue 1 Cover"
           onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
       </div>
       <div class="issue-info">
@@ -535,7 +559,7 @@
   <div class="issue-panel" id="panel-issue2">
     <div class="issue-header">
       <div class="issue-cover">
-        <img src="images/issue2-ghostmode/cover.jpg" alt="Issue 2 Cover"
+        <img src="images/issue2-ghostmode/cover1.png" alt="Issue 2 Cover"
           onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
       </div>
       <div class="issue-info">
@@ -551,7 +575,7 @@
   <div class="issue-panel" id="panel-issue3">
     <div class="issue-header">
       <div class="issue-cover">
-        <img src="images/issue3-latenightshenanigans/cover.jpg" alt="Issue 3 Cover"
+        <img src="images/issue3-latenightshenanigans/cover 3.png" alt="Issue 3 Cover"
           onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
       </div>
       <div class="issue-info">
@@ -590,34 +614,123 @@
     'character-lore': {
       folder: 'images/character-lore',
       pages: [
-        'page1.jpg',
-        'page2.jpg',
-        'page3.jpg',
-        // Add more pages here: 'page4.jpg', etc.
+        'BATTYLORE.png',
+        'beth lore.png',
+        'bigfoot lore.jpg',
+        'bleezlore.png',
+        'buzzmenace.png',
+        'ceesketch.png',
+        'dreaux lore.png',
+        'g33ky_lore.png',
+        'kajunlore1.png',
+        'locklore1.png',
+        'lunalore.png',
+        'melyellow.png',
+        'mizzlore.png',
+        'roninlore.png',
+        'ryan lore1.png',
+        'ryan lore2.png',
+        'Savage Anarchy.png',
+        'swiggy.png',
+        'TEMPLOREE.png',
+        'trixlore.png',
+        'weiner dog and deborah lore.png',
+        'YAPPPBABY.png',
+        'zaklore.png',
       ]
     },
     'issue1': {
       folder: 'images/issue1-dragonform',
       pages: [
-        'page1.jpg',
-        'page2.jpg',
-        'page3.jpg',
+        'page 1.png',
+        'page 2.png',
+        'page 3.png',
+        'page 3b.png',
+        'page 4.png',
+        'page 5.png',
+        'page 5b.png',
+        'page 6.png',
+        'page 6b.png',
+        'page 7.png',
+        'page 8.png',
+        'page 8b.png',
+        'page 9.png',
+        'page 10.png',
+        'page 10b.png',
+        'page 11.png',
+        'page 11b.png',
+        'page 12.png',
+        'page 13.png',
+        'page 14.png',
+        'page 15.png',
+        'page 15b.png',
+        'page 16.png',
+        'page 17.png',
+        'page 18.png',
+        'page 19.png',
+        'page 19b.png',
+        'page 20.png',
+        'page 21.png',
+        'page 22.png',
+        'page 23.jpg',
+        'page 24.png',
+        'page 25.png',
+        'page 25b.jpg',
+        'page 26.png',
+        'page 27.png',
+        'page 27b.png',
+        'page 28.png',
+        'page 29.png',
+        'page 30.png',
+        'Teaser.png',
       ]
     },
     'issue2': {
       folder: 'images/issue2-ghostmode',
       pages: [
-        'page1.jpg',
-        'page2.jpg',
-        'page3.jpg',
+        'p 1.png',
+        'p 2.png',
+        'p 3.png',
+        'p 4.png',
+        'p 5.png',
+        'p 6.png',
+        'p 7.png',
+        'p 8.png',
+        'p 9.png',
+        'p 10.png',
+        'p 11.png',
+        'p 12.png',
+        'p 13.png',
+        'p 14.png',
+        'p 15.png',
+        'p 16.png',
+        'p 17.png',
+        'p 18.png',
+        'p 19.png',
+        'p 20.png',
+        'p 21.png',
+        'p 22.png',
+        'p 23.png',
+        'p 24.png',
+        'p 25.png',
+        'p 26.png',
+        'p 27.png',
+        'p 28.png',
+        'p 29.png',
+        'p 30.png',
       ]
     },
     'issue3': {
       folder: 'images/issue3-latenightshenanigans',
       pages: [
-        'page1.jpg',
-        'page2.jpg',
-        'page3.jpg',
+        'page1.png',
+        'page2.png',
+        'page3.png',
+        'page4.png',
+        'page5.png',
+        'page6.png',
+        'page7.png',
+        'page8.png',
       ]
     }
   };
