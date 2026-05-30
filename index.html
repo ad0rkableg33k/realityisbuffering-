@@ -42,7 +42,6 @@
     z-index: 9999;
   }
 
-  /* ── NAV ── */
   nav {
     position: sticky;
     top: 0;
@@ -93,7 +92,6 @@
     background: var(--tab-active-bg);
   }
 
-  /* ── HERO ── */
   .hero {
     position: relative;
     width: 100%;
@@ -137,7 +135,6 @@
 
   .hero-title span { color: var(--pink); display: block; font-size: 0.45em; letter-spacing: 8px; }
 
-  /* ── SECTION HEADING ── */
   .section-heading {
     text-align: center;
     padding: 2rem 1rem 1rem;
@@ -151,7 +148,6 @@
     text-shadow: 0 0 20px var(--pink-glow), 3px 3px 0 var(--purple-dark);
   }
 
-  /* TOC button */
   .toc-btn {
     display: inline-block;
     margin-top: 0.8rem;
@@ -174,7 +170,6 @@
     background: var(--tab-active-bg);
   }
 
-  /* ── TOC OVERLAY ── */
   .toc-overlay {
     display: none;
     position: fixed;
@@ -224,9 +219,7 @@
     border: 1px solid var(--surface2);
   }
 
-  .toc-section {
-    margin-bottom: 1.5rem;
-  }
+  .toc-section { margin-bottom: 1.5rem; }
 
   .toc-section-title {
     font-family: 'Bebas Neue', sans-serif;
@@ -239,11 +232,7 @@
     text-shadow: 0 0 8px var(--purple);
   }
 
-  .toc-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+  .toc-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
   .toc-link {
     font-family: 'Share Tech Mono', monospace;
@@ -264,7 +253,6 @@
     text-shadow: 0 0 6px var(--pink);
   }
 
-  /* ── ISSUE TABS ── */
   .issue-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -309,7 +297,6 @@
     50% { text-shadow: 0 0 20px var(--pink), 0 0 40px var(--pink-glow); }
   }
 
-  /* ── READER ── */
   .reader-wrap {
     margin: 0 1rem 2rem;
     background: var(--surface);
@@ -321,11 +308,7 @@
   .issue-panel { display: none; }
   .issue-panel.active { display: block; }
 
-  .issue-banner {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+  .issue-banner { width: 100%; height: auto; display: block; }
 
   .issue-header {
     display: flex;
@@ -360,7 +343,6 @@
     padding-bottom: 0.4rem;
   }
 
-  /* ── CHARACTER GRID ── */
   .char-grid {
     display: flex;
     flex-direction: column;
@@ -378,7 +360,6 @@
   .char-lore-wrap:hover { border-color: var(--pink); box-shadow: 0 0 15px var(--pink-glow); }
   .char-lore-wrap img { width: 100%; display: block; }
 
-  /* ── PAGES ── */
   .pages-container {
     display: flex;
     flex-direction: column;
@@ -411,7 +392,6 @@
     pointer-events: none;
   }
 
-  /* ── LIGHTBOX ── */
   .lightbox {
     display: none;
     position: fixed;
@@ -473,7 +453,6 @@
     color: var(--text-dim);
   }
 
-  /* ── FOOTER ── */
   .glitch-deco {
     text-align: center;
     padding: 1rem;
@@ -496,7 +475,6 @@
   footer a { color: var(--pink); text-decoration: none; }
   footer a:hover { text-shadow: 0 0 8px var(--pink); }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     nav { padding: 0.5rem 0.8rem; }
     .issue-tabs { margin: 0.5rem 0.5rem 0; }
@@ -512,7 +490,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a class="nav-logo" href="index.html">BY:G33KY</a>
   <ul class="nav-links">
@@ -523,7 +500,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <img src="images/Other/reality%20is%20buffering.png" alt="Reality is Buffering"
     onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';">
@@ -533,35 +509,28 @@
   <div class="hero-title">Reality<span>×IS×</span>Buffering</div>
 </div>
 
-<!-- SECTION HEADING -->
 <div class="section-heading">
   <h2>View Issues Below</h2>
   <button class="toc-btn" id="tocBtn">📋 TABLE OF CONTENTS</button>
 </div>
 
-<!-- TOC OVERLAY -->
 <div class="toc-overlay" id="tocOverlay">
   <div class="toc-inner">
     <span class="toc-close" id="tocClose">✕</span>
     <div class="toc-title">Table of Contents</div>
-    <img src="images/Other/table%20of%20contents.png" class="toc-banner" alt="Table of Contents"
-      onerror="this.style.display='none'">
-
+    <img src="images/Other/table%20of%20contents.png" class="toc-banner" alt="Table of Contents" onerror="this.style.display='none'">
     <div class="toc-section">
       <div class="toc-section-title">// CHARACTER LORE</div>
       <div class="toc-links" id="toc-chars"></div>
     </div>
-
     <div class="toc-section">
       <div class="toc-section-title">// #1 DRAGONFORM.EXE</div>
       <div class="toc-links" id="toc-issue1"></div>
     </div>
-
     <div class="toc-section">
       <div class="toc-section-title">// #2 GHOSTMODE</div>
       <div class="toc-links" id="toc-issue2"></div>
     </div>
-
     <div class="toc-section">
       <div class="toc-section-title">// #3 LATE NIGHT SHENANIGANS</div>
       <div class="toc-links" id="toc-issue3"></div>
@@ -569,7 +538,6 @@
   </div>
 </div>
 
-<!-- ISSUE TABS -->
 <div class="issue-tabs">
   <button class="issue-tab active" data-issue="character-lore">CHARACTER LORE</button>
   <button class="issue-tab" data-issue="issue1">#1 DRAGONFORM.EXE</button>
@@ -577,13 +545,10 @@
   <button class="issue-tab" data-issue="issue3">#3 LATE NIGHT SHENANIGANS</button>
 </div>
 
-<!-- READER -->
 <div class="reader-wrap">
 
-  <!-- CHARACTER LORE -->
   <div class="issue-panel active" id="panel-character-lore">
-    <img src="images/Other/character%20list.png" class="issue-banner" alt="Character Lore Banner"
-      onerror="this.style.display='none'">
+    <img src="images/Other/character%20list.png" class="issue-banner" alt="Character Lore Banner" onerror="this.style.display='none'">
     <div class="issue-header">
       <div class="issue-info">
         <h3>Character Lore</h3>
@@ -594,14 +559,11 @@
     <div class="char-grid" id="char-grid"></div>
   </div>
 
-  <!-- ISSUE 1 -->
   <div class="issue-panel" id="panel-issue1">
-    <img src="images/issue1-dragonform/banners.png" class="issue-banner" alt="Issue 1 Banner"
-      onerror="this.style.display='none'">
+    <img src="images/issue1-dragonform/banners.png" class="issue-banner" alt="Issue 1 Banner" onerror="this.style.display='none'">
     <div class="issue-header">
       <div class="issue-cover">
-        <img src="images/issue1-dragonform/covers.png" alt="Issue 1 Cover"
-          onerror="this.parentElement.style.display='none'">
+        <img src="images/issue1-dragonform/covers.png" alt="Issue 1 Cover" onerror="this.parentElement.style.display='none'">
       </div>
       <div class="issue-info">
         <h3>#1 Dragonform.exe</h3>
@@ -612,14 +574,11 @@
     <div class="pages-container" id="pages-issue1"></div>
   </div>
 
-  <!-- ISSUE 2 -->
   <div class="issue-panel" id="panel-issue2">
-    <img src="images/issue2-ghostmode/banner1.png" class="issue-banner" alt="Issue 2 Banner"
-      onerror="this.style.display='none'">
+    <img src="images/issue2-ghostmode/banner1.png" class="issue-banner" alt="Issue 2 Banner" onerror="this.style.display='none'">
     <div class="issue-header">
       <div class="issue-cover">
-        <img src="images/issue2-ghostmode/cover1.png" alt="Issue 2 Cover"
-          onerror="this.parentElement.style.display='none'">
+        <img src="images/issue2-ghostmode/cover1.png" alt="Issue 2 Cover" onerror="this.parentElement.style.display='none'">
       </div>
       <div class="issue-info">
         <h3>#2 Ghostmode</h3>
@@ -630,14 +589,11 @@
     <div class="pages-container" id="pages-issue2"></div>
   </div>
 
-  <!-- ISSUE 3 -->
   <div class="issue-panel" id="panel-issue3">
-    <img src="images/issue3-latenightshenanigans/banner%203.png" class="issue-banner" alt="Issue 3 Banner"
-      onerror="this.style.display='none'">
+    <img src="images/issue3-latenightshenanigans/banner%203.png" class="issue-banner" alt="Issue 3 Banner" onerror="this.style.display='none'">
     <div class="issue-header">
       <div class="issue-cover">
-        <img src="images/issue3-latenightshenanigans/cover%203.png" alt="Issue 3 Cover"
-          onerror="this.parentElement.style.display='none'">
+        <img src="images/issue3-latenightshenanigans/cover%203.png" alt="Issue 3 Cover" onerror="this.parentElement.style.display='none'">
       </div>
       <div class="issue-info">
         <h3>#3 Late Night Shenanigans</h3>
@@ -656,7 +612,6 @@
   <p>© BY:G33KY · <a href="https://realityisbuffering.weebly.com" target="_blank">WEEBLY</a> · REALITY IS BUFFERING</p>
 </footer>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <span class="lightbox-close" id="lbClose">✕</span>
   <span class="lightbox-nav prev" id="lbPrev">‹</span>
@@ -666,33 +621,31 @@
 </div>
 
 <script>
-// ── CHARACTER DATA ──
 const CHARACTERS = [
   { banner: '1%20babyybat2.png',    lore: '1%20babyybat2.png',    name: 'BabyBat' },
-  { banner: '2%20g33ky.png',       lore: '2%20g33ky.png',       name: 'G33KY' },
-  { banner: '3%20mizz.png',        lore: '3%20mizz.png',        name: 'Mizz' },
-  { banner: '4%20cee.png',         lore: '4%20cee.png',         name: 'Cee' },
-  { banner: '5%20lonestar.png',    lore: '5%20lonestar.png',    name: 'Ronin/Lonestar' },
-  { banner: '6%20ryan.png',        lore: '6%20ryan.png',        name: 'Ryan' },
-  { banner: '7%20lock.png',        lore: '7%20lock.png',        name: 'Lock' },
-  { banner: '8%20bleezy.png',      lore: '8%20bleezy.png',      name: 'Bleezy' },
-  { banner: '9%20buzz.png',        lore: '9%20buzz.png',        name: 'Buzz Menace' },
-  { banner: '10%20melanin.png',    lore: '10%20melanin.png',    name: 'Melanin' },
-  { banner: '11%20swiggy.png',     lore: '11%20swiggy.png',     name: 'Swiggy' },
-  { banner: '12%20trixx.png',      lore: '12%20trixx.png',      name: 'Trixx' },
-  { banner: '13%20templar.png',    lore: '13%20templar.png',    name: 'Templar' },
-  { banner: '14%20yapbaby.png',    lore: '14%20yapbaby.png',    name: 'YappBaby' },
-  { banner: '15%20luna.png',       lore: '15%20luna.png',       name: 'Luna' },
-  { banner: '16%20zak.png',        lore: '16%20zak.png',        name: 'Zak' },
-  { banner: '17%20weiner.png',     lore: '17%20weiner.png',     name: 'Weiner Dog & Deborah' },
-  { banner: '18%20beth.png',       lore: '18%20beth.png',       name: 'Beth' },
-  { banner: '19%20bigfoot.png',    lore: '19%20bigfoot.png',    name: 'Bigfoot' },
-  { banner: '20%20dreaux.png',     lore: '20%20dreaux.png',     name: 'Dreaux' },
-  { banner: '21%20kajunlore1.png', lore: '21%20kajunlore1.png', name: 'Kajun' },
-  { banner: '22%20savage.png',     lore: '22%20savage.png',     name: 'Savage Anarchy' },
+  { banner: '2%20g33ky.png',        lore: '2%20g33ky.png',        name: 'G33KY' },
+  { banner: '3%20mizz.png',         lore: '3%20mizz.png',         name: 'Mizz' },
+  { banner: '4%20cee.png',          lore: '4%20cee.png',          name: 'Cee' },
+  { banner: '5%20lonestar.png',     lore: '5%20lonestar.png',     name: 'Ronin/Lonestar' },
+  { banner: '6%20ryan.png',         lore: '6%20ryan.png',         name: 'Ryan' },
+  { banner: '7%20lock.png',         lore: '7%20lock.png',         name: 'Lock' },
+  { banner: '8%20bleezy.png',       lore: '8%20bleezy.png',       name: 'Bleezy' },
+  { banner: '9%20buzz.png',         lore: '9%20buzz.png',         name: 'Buzz Menace' },
+  { banner: '10%20melanin.png',     lore: '10%20melanin.png',     name: 'Melanin' },
+  { banner: '11%20swiggy.png',      lore: '11%20swiggy.png',      name: 'Swiggy' },
+  { banner: '12%20trixx.png',       lore: '12%20trixx.png',       name: 'Trixx' },
+  { banner: '13%20templar.png',     lore: '13%20templar.png',     name: 'Templar' },
+  { banner: '14%20yapbaby.png',     lore: '14%20yapbaby.png',     name: 'YappBaby' },
+  { banner: '15%20luna.png',        lore: '15%20luna.png',        name: 'Luna' },
+  { banner: '16%20zak.png',         lore: '16%20zak.png',         name: 'Zak' },
+  { banner: '17%20weiner.png',      lore: '17%20weiner.png',      name: 'Weiner Dog & Deborah' },
+  { banner: '18%20beth.png',        lore: '18%20beth.png',        name: 'Beth' },
+  { banner: '19%20bigfoot.png',     lore: '19%20bigfoot.png',     name: 'Bigfoot' },
+  { banner: '20%20dreaux.png',      lore: '20%20dreaux.png',      name: 'Dreaux' },
+  { banner: '21%20kajunlore1.png',  lore: '21%20kajunlore1.png',  name: 'Kajun' },
+  { banner: '22%20savage.png',      lore: '22%20savage.png',      name: 'Savage Anarchy' },
 ];
 
-// ── ISSUE DATA ──
 const ISSUE_DATA = {
   'issue1': {
     folder: 'images/issue1-dragonform',
@@ -703,7 +656,7 @@ const ISSUE_DATA = {
       'page%2011.png','page%2011b.png','page%2012.png','page%2013.png','page%2014.png',
       'page%2015.png','page%2015b.png','page%2016.png','page%2017.png','page%2018.png',
       'page%2019.png','page%2019b.png','page%2020.png','page%2021.png','page%2022.png',
-      'page 23.jpg','page%2024.png','page%2025.png','page 25b.jpg','page%2026.png',
+      'page%2023.jpg','page%2024.png','page%2025.png','page%2025b.jpg','page%2026.png',
       'page%2027.png','page%2027b.png','page%2028.png','page%2029.png','page%2030.png',
       'Teaser.png'
     ]
@@ -728,7 +681,6 @@ const ISSUE_DATA = {
   }
 };
 
-// ── LIGHTBOX ──
 let lbPaths = [], lbIndex = 0;
 
 function openLightbox(paths, index) {
@@ -760,7 +712,6 @@ document.addEventListener('keydown', e => {
   if (e.key==='Escape') closeLightbox();
 });
 
-// ── BUILD CHARACTER GRID ──
 function buildCharGrid() {
   const grid = document.getElementById('char-grid');
   const lorePaths = CHARACTERS.map(c => 'images/character-lore/' + c.lore);
@@ -795,7 +746,6 @@ function buildCharGrid() {
     card.appendChild(lWrap);
     grid.appendChild(card);
 
-    // TOC entry
     const link = document.createElement('a');
     link.className = 'toc-link';
     link.textContent = char.name;
@@ -812,7 +762,6 @@ function buildCharGrid() {
   });
 }
 
-// ── BUILD ISSUE PAGES ──
 function buildIssuePages() {
   for (const [key, data] of Object.entries(ISSUE_DATA)) {
     const container = document.getElementById('pages-' + key);
@@ -840,7 +789,6 @@ function buildIssuePages() {
       wrap.addEventListener('click', () => openLightbox(paths, i));
       container.appendChild(wrap);
 
-      // TOC entry
       if (tocLinks) {
         const link = document.createElement('a');
         link.className = 'toc-link';
@@ -860,7 +808,6 @@ function buildIssuePages() {
   }
 }
 
-// ── TABS ──
 function switchTab(issueKey) {
   document.querySelectorAll('.issue-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.issue-panel').forEach(p => p.classList.remove('active'));
@@ -874,7 +821,6 @@ document.querySelectorAll('.issue-tab').forEach(tab => {
   tab.addEventListener('click', () => switchTab(tab.dataset.issue));
 });
 
-// ── TOC ──
 function openTOC() {
   document.getElementById('tocOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -891,7 +837,6 @@ document.getElementById('tocOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('tocOverlay')) closeTOC();
 });
 
-// ── INIT ──
 buildCharGrid();
 buildIssuePages();
 </script>
