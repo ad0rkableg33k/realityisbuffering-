@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Reality is Buffering | BY:G33KY</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Share+Tech+Mono&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
     --pink: #ff2d78;
@@ -18,13 +18,11 @@
     --surface2: #1e0028;
     --text: #f0d0f8;
     --text-dim: #9070a0;
-    --green-hair: #39ff14;
     --white: #ffffff;
     --tab-active-bg: #ff2d7822;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -35,18 +33,11 @@
     overflow-x: hidden;
   }
 
-  /* Scanline overlay */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.08) 2px,
-      rgba(0,0,0,0.08) 4px
-    );
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
     pointer-events: none;
     z-index: 9999;
   }
@@ -55,8 +46,8 @@
   nav {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(10,0,8,0.92);
+    z-index: 200;
+    background: rgba(10,0,8,0.94);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--pink);
     box-shadow: 0 0 20px var(--pink-glow);
@@ -95,30 +86,34 @@
     transition: all 0.2s;
   }
 
-  .nav-links a:hover,
-  .nav-links a.active {
+  .nav-links a:hover, .nav-links a.active {
     color: var(--pink);
     border-color: var(--pink);
     text-shadow: 0 0 8px var(--pink);
     background: var(--tab-active-bg);
   }
 
-  /* ── HERO BANNER ── */
+  /* ── HERO ── */
   .hero {
     position: relative;
     width: 100%;
-    max-height: 420px;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: var(--bg);
   }
 
   .hero img {
     width: 100%;
+    max-height: 420px;
     object-fit: cover;
     object-position: center top;
     display: block;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%);
+    pointer-events: none;
   }
 
   .hero-fallback {
@@ -138,59 +133,17 @@
     font-size: clamp(3rem, 12vw, 8rem);
     line-height: 0.9;
     color: var(--white);
-    text-shadow:
-      0 0 20px var(--pink),
-      0 0 60px var(--pink-glow),
-      4px 4px 0 var(--purple-dark);
+    text-shadow: 0 0 20px var(--pink), 0 0 60px var(--pink-glow), 4px 4px 0 var(--purple-dark);
     letter-spacing: 4px;
   }
 
-  .hero-title span {
-    color: var(--pink);
-    display: block;
-    font-size: 0.45em;
-    letter-spacing: 8px;
-  }
-
-  .hero-subtitle {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.2rem, 4vw, 2.5rem);
-    color: var(--purple);
-    text-shadow: 0 0 15px var(--purple);
-    letter-spacing: 6px;
-    margin-top: 0.5rem;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, transparent 50%, var(--bg) 100%);
-    pointer-events: none;
-  }
-
-  .hero-extras {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 0.8rem 1rem 0;
-    background: var(--bg);
-  }
-
-  .hero-extra-img {
-    height: 60px;
-    width: auto;
-    object-fit: contain;
-    opacity: 0.9;
-    transition: opacity 0.2s;
-  }
-
-  .hero-extra-img:hover { opacity: 1; }
+  .hero-title span { color: var(--pink); display: block; font-size: 0.45em; letter-spacing: 8px; }
 
   /* ── SECTION HEADING ── */
   .section-heading {
     text-align: center;
-    padding: 2.5rem 1rem 1rem;
+    padding: 2rem 1rem 1rem;
+    position: relative;
   }
 
   .section-heading h2 {
@@ -198,14 +151,125 @@
     font-size: clamp(1.8rem, 6vw, 3.5rem);
     color: var(--pink);
     text-shadow: 0 0 20px var(--pink-glow), 3px 3px 0 var(--purple-dark);
+  }
+
+  /* TOC button */
+  .toc-btn {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
     letter-spacing: 2px;
+    color: var(--purple);
+    border: 1px solid var(--purple);
+    padding: 0.4rem 1.2rem;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.2s;
+    text-shadow: 0 0 8px var(--purple);
+  }
+
+  .toc-btn:hover {
+    color: var(--pink);
+    border-color: var(--pink);
+    text-shadow: 0 0 10px var(--pink);
+    background: var(--tab-active-bg);
+  }
+
+  /* ── TOC OVERLAY ── */
+  .toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: rgba(0,0,0,0.92);
+    overflow-y: auto;
+    padding: 2rem 1rem;
+  }
+
+  .toc-overlay.open { display: block; }
+
+  .toc-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid var(--pink);
+    background: var(--surface);
+    box-shadow: 0 0 40px var(--pink-glow);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .toc-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--pink);
+    cursor: pointer;
+    text-shadow: 0 0 10px var(--pink);
+  }
+
+  .toc-title {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: var(--pink);
+    text-shadow: 0 0 15px var(--pink-glow);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .toc-banner {
+    width: 100%;
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--surface2);
+  }
+
+  .toc-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .toc-section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: var(--purple);
+    border-bottom: 1px solid var(--surface2);
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 0 8px var(--purple);
+  }
+
+  .toc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .toc-link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    background: var(--surface2);
+    border: 1px solid transparent;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .toc-link:hover {
+    color: var(--pink);
+    border-color: var(--pink);
+    text-shadow: 0 0 6px var(--pink);
   }
 
   /* ── ISSUE TABS ── */
   .issue-tabs {
     display: flex;
     flex-wrap: wrap;
-    gap: 0;
     border-bottom: 2px solid var(--pink);
     margin: 1rem 1rem 0;
     overflow-x: auto;
@@ -231,10 +295,7 @@
     bottom: -2px;
   }
 
-  .issue-tab:hover {
-    color: var(--pink);
-    background: var(--tab-active-bg);
-  }
+  .issue-tab:hover { color: var(--pink); background: var(--tab-active-bg); }
 
   .issue-tab.active {
     color: var(--pink);
@@ -242,9 +303,15 @@
     border-top: 2px solid var(--pink);
     border-bottom: 2px solid var(--surface);
     text-shadow: 0 0 8px var(--pink);
+    animation: tabPulse 3s ease-in-out infinite;
   }
 
-  /* ── COMIC READER ── */
+  @keyframes tabPulse {
+    0%, 100% { text-shadow: 0 0 8px var(--pink); }
+    50% { text-shadow: 0 0 20px var(--pink), 0 0 40px var(--pink-glow); }
+  }
+
+  /* ── READER ── */
   .reader-wrap {
     margin: 0 1rem 2rem;
     background: var(--surface);
@@ -253,35 +320,27 @@
     min-height: 300px;
   }
 
-  .issue-panel {
-    display: none;
-    padding: 1.5rem;
-  }
+  .issue-panel { display: none; }
+  .issue-panel.active { display: block; }
 
-  .issue-panel.active {
+  .issue-banner {
+    width: 100%;
     display: block;
+    max-height: 200px;
+    object-fit: cover;
+    object-position: center;
   }
 
-  /* Issue banner / cover area */
   .issue-header {
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
+    padding: 1.2rem 1.5rem 0.5rem;
     flex-wrap: wrap;
   }
 
-  .issue-cover {
-    width: 160px;
-    flex-shrink: 0;
-    border: 2px solid var(--pink);
-    box-shadow: 0 0 20px var(--pink-glow);
-  }
-
-  .issue-cover img {
-    width: 100%;
-    display: block;
-  }
+  .issue-cover { width: 140px; flex-shrink: 0; border: 2px solid var(--pink); box-shadow: 0 0 20px var(--pink-glow); }
+  .issue-cover img { width: 100%; display: block; }
 
   .issue-info h3 {
     font-family: 'Bebas Neue', sans-serif;
@@ -293,29 +352,43 @@
     margin-bottom: 0.5rem;
   }
 
-  .issue-info p {
-    font-size: 0.85rem;
-    color: var(--text-dim);
-    line-height: 1.6;
-    max-width: 500px;
-  }
+  .issue-info p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; max-width: 500px; }
 
-  /* Pages grid / scroll */
   .pages-label {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1rem;
     letter-spacing: 3px;
     color: var(--purple);
-    margin-bottom: 0.8rem;
+    margin: 0.5rem 1.5rem 0.8rem;
     border-bottom: 1px solid var(--surface2);
     padding-bottom: 0.4rem;
   }
 
+  /* ── CHARACTER GRID ── */
+  .char-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1.5rem 1.5rem;
+    align-items: center;
+  }
+
+  .char-card { width: 100%; max-width: 800px; }
+
+  .char-banner { width: 100%; margin-bottom: 0.3rem; }
+  .char-banner img { width: 100%; display: block; border: 1px solid var(--purple); box-shadow: 0 0 10px rgba(155,48,255,0.3); }
+
+  .char-lore-wrap { position: relative; width: 100%; cursor: zoom-in; border: 1px solid var(--surface2); transition: border-color 0.2s, box-shadow 0.2s; }
+  .char-lore-wrap:hover { border-color: var(--pink); box-shadow: 0 0 15px var(--pink-glow); }
+  .char-lore-wrap img { width: 100%; display: block; }
+
+  /* ── PAGES ── */
   .pages-container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
+    padding: 0 1.5rem 1.5rem;
   }
 
   .page-img-wrap {
@@ -324,18 +397,11 @@
     cursor: zoom-in;
     position: relative;
     border: 1px solid var(--surface2);
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .page-img-wrap:hover {
-    border-color: var(--pink);
-    box-shadow: 0 0 15px var(--pink-glow);
-  }
-
-  .page-img-wrap img {
-    width: 100%;
-    display: block;
-  }
+  .page-img-wrap:hover { border-color: var(--pink); box-shadow: 0 0 15px var(--pink-glow); }
+  .page-img-wrap img { width: 100%; display: block; }
 
   .page-num {
     position: absolute;
@@ -346,22 +412,7 @@
     color: var(--pink);
     background: rgba(0,0,0,0.7);
     padding: 2px 6px;
-  }
-
-  /* No pages yet message */
-  .no-pages {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: var(--text-dim);
-    font-size: 0.9rem;
-  }
-
-  .no-pages span {
-    display: block;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.5rem;
-    color: var(--purple);
-    margin-bottom: 0.5rem;
+    pointer-events: none;
   }
 
   /* ── LIGHTBOX ── */
@@ -370,16 +421,13 @@
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: rgba(0,0,0,0.95);
-    cursor: zoom-out;
+    background: rgba(0,0,0,0.96);
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  .lightbox.open {
-    display: flex;
-  }
+  .lightbox.open { display: flex; }
 
   .lightbox img {
     max-width: 95vw;
@@ -387,7 +435,6 @@
     object-fit: contain;
     border: 1px solid var(--pink);
     box-shadow: 0 0 40px var(--pink-glow);
-    transition: transform 0.2s;
   }
 
   .lightbox-close {
@@ -430,7 +477,7 @@
     color: var(--text-dim);
   }
 
-  /* ── GLITCH DECORATION ── */
+  /* ── FOOTER ── */
   .glitch-deco {
     text-align: center;
     padding: 1rem;
@@ -441,7 +488,6 @@
     user-select: none;
   }
 
-  /* ── FOOTER ── */
   footer {
     border-top: 1px solid var(--surface2);
     padding: 1.5rem;
@@ -451,30 +497,21 @@
     letter-spacing: 2px;
   }
 
-  footer a {
-    color: var(--pink);
-    text-decoration: none;
-  }
-
+  footer a { color: var(--pink); text-decoration: none; }
   footer a:hover { text-shadow: 0 0 8px var(--pink); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 600px) {
     nav { padding: 0.5rem 0.8rem; }
     .issue-tabs { margin: 0.5rem 0.5rem 0; }
-    .reader-wrap { margin: 0 0.5rem 1.5rem; }
-    .issue-panel { padding: 1rem 0.8rem; }
-    .issue-cover { width: 100px; }
+    .reader-wrap { margin: 0 0.3rem 1.5rem; }
+    .issue-header { padding: 0.8rem; }
+    .issue-cover { width: 90px; }
+    .pages-container, .char-grid { padding: 0 0.5rem 1rem; }
+    .pages-label { margin: 0.5rem 0.8rem; }
     .lightbox-nav { font-size: 2rem; padding: 0.3rem 0.6rem; }
+    .toc-inner { padding: 1.2rem; }
   }
-
-  /* Pink glow pulse on active tab */
-  @keyframes tabPulse {
-    0%, 100% { text-shadow: 0 0 8px var(--pink); }
-    50% { text-shadow: 0 0 20px var(--pink), 0 0 40px var(--pink-glow); }
-  }
-
-  .issue-tab.active { animation: tabPulse 3s ease-in-out infinite; }
 </style>
 </head>
 <body>
@@ -484,34 +521,60 @@
   <a class="nav-logo" href="index.html">BY:G33KY</a>
   <ul class="nav-links">
     <li><a href="index.html" class="active">REALITY IS BUFFERING COMIC</a></li>
-    <li><a href="deck.html">UNSOLICITED DECK PICS</a></li>
-    <li><a href="font.html">FANCY FONT GENERATOR</a></li>
-    <li><a href="mizzverse.html">MIZZVERSE</a></li>
+    <li><a href="https://realityisbuffering.weebly.com/unsolicteddeckpics.html" target="_blank">UNSOLICITED DECK PICS</a></li>
+    <li><a href="https://ad0rkableg33k.github.io/FontGenerator.html" target="_blank">FANCY FONT GENERATOR</a></li>
+    <li><a href="https://realityisbuffering.weebly.com/mizzverse.html" target="_blank">MIZZVERSE</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <img src="reality is buffering1.png" alt="Reality is Buffering" onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';">
+  <img src="images/Other/reality is buffering.png" alt="Reality is Buffering"
+    onerror="this.style.display='none'; document.getElementById('hero-fallback').style.display='flex';">
   <div class="hero-overlay"></div>
-</div>
-<div class="hero-extras">
-  <img src="reality is buffering2.png" alt="Reality is Buffering 2" class="hero-extra-img" style="height:80px;">
-  <img src="character list.png" alt="Character List" class="hero-extra-img">
-  <img src="table of contents.png" alt="Table of Contents" class="hero-extra-img">
 </div>
 <div class="hero-fallback" id="hero-fallback" style="display:none;">
   <div class="hero-title">Reality<span>×IS×</span>Buffering</div>
-  <div class="hero-subtitle">COMIC · BY:G33KY</div>
 </div>
 
 <!-- SECTION HEADING -->
 <div class="section-heading">
   <h2>View Issues Below</h2>
+  <button class="toc-btn" id="tocBtn">📋 TABLE OF CONTENTS</button>
+</div>
+
+<!-- TOC OVERLAY -->
+<div class="toc-overlay" id="tocOverlay">
+  <div class="toc-inner">
+    <span class="toc-close" id="tocClose">✕</span>
+    <div class="toc-title">Table of Contents</div>
+    <img src="images/Other/table of contents.png" class="toc-banner" alt="Table of Contents"
+      onerror="this.style.display='none'">
+
+    <div class="toc-section">
+      <div class="toc-section-title">// CHARACTER LORE</div>
+      <div class="toc-links" id="toc-chars"></div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-section-title">// #1 DRAGONFORM.EXE</div>
+      <div class="toc-links" id="toc-issue1"></div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-section-title">// #2 GHOSTMODE</div>
+      <div class="toc-links" id="toc-issue2"></div>
+    </div>
+
+    <div class="toc-section">
+      <div class="toc-section-title">// #3 LATE NIGHT SHENANIGANS</div>
+      <div class="toc-links" id="toc-issue3"></div>
+    </div>
+  </div>
 </div>
 
 <!-- ISSUE TABS -->
-<div class="issue-tabs" id="issueTabs">
+<div class="issue-tabs">
   <button class="issue-tab active" data-issue="character-lore">CHARACTER LORE</button>
   <button class="issue-tab" data-issue="issue1">#1 DRAGONFORM.EXE</button>
   <button class="issue-tab" data-issue="issue2">#2 GHOSTMODE</button>
@@ -523,28 +586,26 @@
 
   <!-- CHARACTER LORE -->
   <div class="issue-panel active" id="panel-character-lore">
+    <img src="images/Other/character-list.png" class="issue-banner" alt="Character Lore Banner"
+      onerror="this.style.display='none'">
     <div class="issue-header">
-      <div class="issue-cover">
-        <img src="character list.png" alt="Character Lore Cover"
-          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
-      </div>
       <div class="issue-info">
         <h3>Character Lore</h3>
         <p>Meet the cast. The lore. The chaos. Dive into the backstories of the characters that make up the Reality is Buffering universe.</p>
       </div>
     </div>
-    <div class="pages-label">// PAGES</div>
-    <div class="pages-container" id="pages-character-lore">
-      <!-- Pages are loaded dynamically -->
-    </div>
+    <div class="pages-label">// CHARACTERS</div>
+    <div class="char-grid" id="char-grid"></div>
   </div>
 
   <!-- ISSUE 1 -->
   <div class="issue-panel" id="panel-issue1">
+    <img src="images/issue1-dragonform/banners.png" class="issue-banner" alt="Issue 1 Banner"
+      onerror="this.style.display='none'">
     <div class="issue-header">
       <div class="issue-cover">
         <img src="images/issue1-dragonform/covers.png" alt="Issue 1 Cover"
-          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
+          onerror="this.parentElement.style.display='none'">
       </div>
       <div class="issue-info">
         <h3>#1 Dragonform.exe</h3>
@@ -557,10 +618,12 @@
 
   <!-- ISSUE 2 -->
   <div class="issue-panel" id="panel-issue2">
+    <img src="images/issue2-ghostmode/banner1.png" class="issue-banner" alt="Issue 2 Banner"
+      onerror="this.style.display='none'">
     <div class="issue-header">
       <div class="issue-cover">
         <img src="images/issue2-ghostmode/cover1.png" alt="Issue 2 Cover"
-          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
+          onerror="this.parentElement.style.display='none'">
       </div>
       <div class="issue-info">
         <h3>#2 Ghostmode</h3>
@@ -573,10 +636,12 @@
 
   <!-- ISSUE 3 -->
   <div class="issue-panel" id="panel-issue3">
+    <img src="images/issue3-latenightshenanigans/banner 3.png" class="issue-banner" alt="Issue 3 Banner"
+      onerror="this.style.display='none'">
     <div class="issue-header">
       <div class="issue-cover">
         <img src="images/issue3-latenightshenanigans/cover 3.png" alt="Issue 3 Cover"
-          onerror="this.src=''; this.alt=''; this.parentElement.style.display='none';">
+          onerror="this.parentElement.style.display='none'">
       </div>
       <div class="issue-info">
         <h3>#3 Late Night Shenanigans</h3>
@@ -591,7 +656,6 @@
 
 <div class="glitch-deco">// N0_GL1TCH_JUST_V1BES //</div>
 
-<!-- FOOTER -->
 <footer>
   <p>© BY:G33KY · <a href="https://realityisbuffering.weebly.com" target="_blank">WEEBLY</a> · REALITY IS BUFFERING</p>
 </footer>
@@ -606,241 +670,235 @@
 </div>
 
 <script>
-  // ── COMIC DATA ──
-  // Edit this object to add/remove pages.
-  // For each issue, list the page image paths in order.
-  // Use relative paths from the repo root.
-  const COMIC_DATA = {
-    'character-lore': {
-      folder: 'images/character-lore',
-      pages: [
-        'BATTYLORE.png',
-        'beth lore.png',
-        'bigfoot lore.jpg',
-        'bleezlore.png',
-        'buzzmenace.png',
-        'ceesketch.png',
-        'dreaux lore.png',
-        'g33ky_lore.png',
-        'kajunlore1.png',
-        'locklore1.png',
-        'lunalore.png',
-        'melyellow.png',
-        'mizzlore.png',
-        'roninlore.png',
-        'ryan lore1.png',
-        'ryan lore2.png',
-        'Savage Anarchy.png',
-        'swiggy.png',
-        'TEMPLOREE.png',
-        'trixlore.png',
-        'weiner dog and deborah lore.png',
-        'YAPPPBABY.png',
-        'zaklore.png',
-      ]
-    },
-    'issue1': {
-      folder: 'images/issue1-dragonform',
-      pages: [
-        'page 1.png',
-        'page 2.png',
-        'page 3.png',
-        'page 3b.png',
-        'page 4.png',
-        'page 5.png',
-        'page 5b.png',
-        'page 6.png',
-        'page 6b.png',
-        'page 7.png',
-        'page 8.png',
-        'page 8b.png',
-        'page 9.png',
-        'page 10.png',
-        'page 10b.png',
-        'page 11.png',
-        'page 11b.png',
-        'page 12.png',
-        'page 13.png',
-        'page 14.png',
-        'page 15.png',
-        'page 15b.png',
-        'page 16.png',
-        'page 17.png',
-        'page 18.png',
-        'page 19.png',
-        'page 19b.png',
-        'page 20.png',
-        'page 21.png',
-        'page 22.png',
-        'page 23.jpg',
-        'page 24.png',
-        'page 25.png',
-        'page 25b.jpg',
-        'page 26.png',
-        'page 27.png',
-        'page 27b.png',
-        'page 28.png',
-        'page 29.png',
-        'page 30.png',
-        'Teaser.png',
-      ]
-    },
-    'issue2': {
-      folder: 'images/issue2-ghostmode',
-      pages: [
-        'p 1.png',
-        'p 2.png',
-        'p 3.png',
-        'p 4.png',
-        'p 5.png',
-        'p 6.png',
-        'p 7.png',
-        'p 8.png',
-        'p 9.png',
-        'p 10.png',
-        'p 11.png',
-        'p 12.png',
-        'p 13.png',
-        'p 14.png',
-        'p 15.png',
-        'p 16.png',
-        'p 17.png',
-        'p 18.png',
-        'p 19.png',
-        'p 20.png',
-        'p 21.png',
-        'p 22.png',
-        'p 23.png',
-        'p 24.png',
-        'p 25.png',
-        'p 26.png',
-        'p 27.png',
-        'p 28.png',
-        'p 29.png',
-        'p 30.png',
-      ]
-    },
-    'issue3': {
-      folder: 'images/issue3-latenightshenanigans',
-      pages: [
-        'page1.png',
-        'page2.png',
-        'page3.png',
-        'page4.png',
-        'page5.png',
-        'page6.png',
-        'page7.png',
-        'page8.png',
-      ]
-    }
-  };
+// ── CHARACTER DATA ──
+const CHARACTERS = [
+  { banner: '1 babyybat.png',   lore: 'BATTYLORE.png',                    name: 'BabyBat' },
+  { banner: '18 beth.png',      lore: 'beth lore.png',                    name: 'Beth' },
+  { banner: '19 bigfoot.png',   lore: 'bigfoot lore.jpg',                 name: 'Bigfoot' },
+  { banner: '8 bleezy.png',     lore: 'bleezlore.png',                    name: 'Bleezy' },
+  { banner: '9 buzz.png',       lore: 'buzzmenace.png',                   name: 'Buzz Menace' },
+  { banner: '4 cee.png',        lore: 'ceesketch.png',                    name: 'Cee' },
+  { banner: '20 dreaux.png',    lore: 'dreaux lore.png',                  name: 'Dreaux' },
+  { banner: '2 g33ky.png',      lore: 'g33ky_lore.png',                   name: 'G33KY' },
+  { banner: '21 kajunlore1.png',lore: 'kajunlore1.png',                   name: 'Kajun' },
+  { banner: '7 lock.png',       lore: 'locklore1.png',                    name: 'Lock' },
+  { banner: '15 luna.png',      lore: 'lunalore.png',                     name: 'Luna' },
+  { banner: '10 melanin.png',   lore: 'melyellow.png',                    name: 'Melanin' },
+  { banner: '3 mizz.png',       lore: 'mizzlore.png',                     name: 'Mizz' },
+  { banner: '5 lonestar.png',   lore: 'roninlore.png',                    name: 'Ronin/Lonestar' },
+  { banner: '6 ryan.png',       lore: 'ryan lore1.png',                   name: 'Ryan (1)' },
+  { banner: '6 ryan.png',       lore: 'ryan lore2.png',                   name: 'Ryan (2)' },
+  { banner: '22 savage.png',    lore: 'Savage Anarchy.png',               name: 'Savage Anarchy' },
+  { banner: '11 swiggy.png',    lore: 'swiggy.png',                       name: 'Swiggy' },
+  { banner: '13 templar.png',   lore: 'TEMPLOREE.png',                    name: 'Templar' },
+  { banner: '12 trixx.png',     lore: 'trixlore.png',                     name: 'Trixx' },
+  { banner: '17 weiner.png',    lore: 'weiner dog and deborah lore.png',  name: 'Weiner Dog & Deborah' },
+  { banner: '14 yapbaby.png',   lore: 'YAPPPBABY.png',                    name: 'YappBaby' },
+  { banner: '16 zak.png',       lore: 'zaklore.png',                      name: 'Zak' },
+];
 
-  // ── RENDER PAGES ──
-  function renderPages() {
-    for (const [issueKey, data] of Object.entries(COMIC_DATA)) {
-      const container = document.getElementById('pages-' + issueKey);
-      if (!container) continue;
-      container.innerHTML = '';
-
-      if (!data.pages || data.pages.length === 0) {
-        container.innerHTML = '<div class="no-pages"><span>LOADING...</span>Pages coming soon. Check back.</div>';
-        continue;
-      }
-
-      data.pages.forEach((page, i) => {
-        const src = data.folder + '/' + page;
-        const wrap = document.createElement('div');
-        wrap.className = 'page-img-wrap';
-        wrap.dataset.issue = issueKey;
-        wrap.dataset.index = i;
-
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = 'Page ' + (i + 1);
-        img.loading = 'lazy';
-        img.onerror = function() {
-          wrap.style.display = 'none';
-        };
-
-        const num = document.createElement('span');
-        num.className = 'page-num';
-        num.textContent = 'pg.' + String(i + 1).padStart(2, '0');
-
-        wrap.appendChild(img);
-        wrap.appendChild(num);
-        wrap.addEventListener('click', () => openLightbox(issueKey, i));
-        container.appendChild(wrap);
-      });
-    }
+// ── ISSUE DATA ──
+const ISSUE_DATA = {
+  'issue1': {
+    folder: 'images/issue1-dragonform',
+    pages: [
+      'page 1.png','page 2.png','page 3.png','page 3b.png','page 4.png',
+      'page 5.png','page 5b.png','page 6.png','page 6b.png','page 7.png',
+      'page 8.png','page 8b.png','page 9.png','page 10.png','page 10b.png',
+      'page 11.png','page 11b.png','page 12.png','page 13.png','page 14.png',
+      'page 15.png','page 15b.png','page 16.png','page 17.png','page 18.png',
+      'page 19.png','page 19b.png','page 20.png','page 21.png','page 22.png',
+      'page 23.jpg','page 24.png','page 25.png','page 25b.jpg','page 26.png',
+      'page 27.png','page 27b.png','page 28.png','page 29.png','page 30.png',
+      'Teaser.png'
+    ]
+  },
+  'issue2': {
+    folder: 'images/issue2-ghostmode',
+    pages: [
+      'p 1.png','p 2.png','p 3.png','p 4.png','p 5.png',
+      'p 6.png','p 7.png','p 8.png','p 9.png','p 10.png',
+      'p 11.png','p 12.png','p 13.png','p 14.png','p 15.png',
+      'p 16.png','p 17.png','p 18.png','p 19.png','p 20.png',
+      'p 21.png','p 22.png','p 23.png','p 24.png','p 25.png',
+      'p 26.png','p 27.png','p 28.png','p 29.png','p 30.png'
+    ]
+  },
+  'issue3': {
+    folder: 'images/issue3-latenightshenanigans',
+    pages: [
+      'page1.png','page2.png','page3.png','page4.png',
+      'page5.png','page6.png','page7.png','page8.png'
+    ]
   }
+};
 
-  // ── TABS ──
-  const tabs = document.querySelectorAll('.issue-tab');
-  const panels = document.querySelectorAll('.issue-panel');
+// ── LIGHTBOX ──
+let lbPaths = [], lbIndex = 0;
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      panels.forEach(p => p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById('panel-' + tab.dataset.issue).classList.add('active');
+function openLightbox(paths, index) {
+  lbPaths = paths; lbIndex = index;
+  document.getElementById('lbImg').src = lbPaths[lbIndex];
+  document.getElementById('lbCounter').textContent = (lbIndex+1) + ' / ' + lbPaths.length;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function updateLightbox() {
+  document.getElementById('lbImg').src = lbPaths[lbIndex];
+  document.getElementById('lbCounter').textContent = (lbIndex+1) + ' / ' + lbPaths.length;
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) closeLightbox(); });
+document.getElementById('lbPrev').addEventListener('click', e => { e.stopPropagation(); lbIndex = (lbIndex-1+lbPaths.length)%lbPaths.length; updateLightbox(); });
+document.getElementById('lbNext').addEventListener('click', e => { e.stopPropagation(); lbIndex = (lbIndex+1)%lbPaths.length; updateLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key==='ArrowRight') document.getElementById('lbNext').click();
+  if (e.key==='ArrowLeft') document.getElementById('lbPrev').click();
+  if (e.key==='Escape') closeLightbox();
+});
+
+// ── BUILD CHARACTER GRID ──
+function buildCharGrid() {
+  const grid = document.getElementById('char-grid');
+  const lorePaths = CHARACTERS.map(c => 'images/character-lore/' + c.lore);
+  const tocLinks = document.getElementById('toc-chars');
+
+  CHARACTERS.forEach((char, i) => {
+    const loreSrc = lorePaths[i];
+    const card = document.createElement('div');
+    card.className = 'char-card';
+    card.id = 'char-' + i;
+
+    if (char.banner) {
+      const bWrap = document.createElement('div');
+      bWrap.className = 'char-banner';
+      const bImg = document.createElement('img');
+      bImg.src = 'images/banners/' + char.banner;
+      bImg.alt = char.name;
+      bImg.onerror = () => bWrap.style.display = 'none';
+      bWrap.appendChild(bImg);
+      card.appendChild(bWrap);
+    }
+
+    const lWrap = document.createElement('div');
+    lWrap.className = 'char-lore-wrap';
+    const lImg = document.createElement('img');
+    lImg.src = loreSrc;
+    lImg.alt = char.name;
+    lImg.loading = 'lazy';
+    lImg.onerror = () => card.style.display = 'none';
+    lWrap.appendChild(lImg);
+    lWrap.addEventListener('click', () => openLightbox(lorePaths, i));
+    card.appendChild(lWrap);
+    grid.appendChild(card);
+
+    // TOC entry
+    const link = document.createElement('a');
+    link.className = 'toc-link';
+    link.textContent = char.name;
+    link.href = '#';
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      closeTOC();
+      switchTab('character-lore');
+      setTimeout(() => {
+        document.getElementById('char-' + i).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
     });
+    tocLinks.appendChild(link);
   });
+}
 
-  // ── LIGHTBOX ──
-  let lbIssue = null;
-  let lbIndex = 0;
+// ── BUILD ISSUE PAGES ──
+function buildIssuePages() {
+  for (const [key, data] of Object.entries(ISSUE_DATA)) {
+    const container = document.getElementById('pages-' + key);
+    const tocLinks = document.getElementById('toc-' + key);
+    if (!container) continue;
+    const paths = data.pages.map(p => data.folder + '/' + p);
 
-  function openLightbox(issueKey, index) {
-    lbIssue = issueKey;
-    lbIndex = index;
-    updateLightbox();
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
+    data.pages.forEach((page, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'page-img-wrap';
+      wrap.id = key + '-page-' + i;
+
+      const img = document.createElement('img');
+      img.src = paths[i];
+      img.alt = 'Page ' + (i+1);
+      img.loading = 'lazy';
+      img.onerror = () => wrap.style.display = 'none';
+
+      const num = document.createElement('span');
+      num.className = 'page-num';
+      num.textContent = 'pg.' + String(i+1).padStart(2,'0');
+
+      wrap.appendChild(img);
+      wrap.appendChild(num);
+      wrap.addEventListener('click', () => openLightbox(paths, i));
+      container.appendChild(wrap);
+
+      // TOC entry
+      if (tocLinks) {
+        const link = document.createElement('a');
+        link.className = 'toc-link';
+        link.textContent = 'pg.' + String(i+1).padStart(2,'0');
+        link.href = '#';
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          closeTOC();
+          switchTab(key);
+          setTimeout(() => {
+            document.getElementById(key+'-page-'+i).scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 100);
+        });
+        tocLinks.appendChild(link);
+      }
+    });
   }
+}
 
-  function updateLightbox() {
-    const data = COMIC_DATA[lbIssue];
-    const src = data.folder + '/' + data.pages[lbIndex];
-    document.getElementById('lbImg').src = src;
-    document.getElementById('lbCounter').textContent =
-      (lbIndex + 1) + ' / ' + data.pages.length;
-  }
+// ── TABS ──
+function switchTab(issueKey) {
+  document.querySelectorAll('.issue-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.issue-panel').forEach(p => p.classList.remove('active'));
+  const tab = document.querySelector('[data-issue="'+issueKey+'"]');
+  if (tab) tab.classList.add('active');
+  const panel = document.getElementById('panel-'+issueKey);
+  if (panel) panel.classList.add('active');
+}
 
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+document.querySelectorAll('.issue-tab').forEach(tab => {
+  tab.addEventListener('click', () => switchTab(tab.dataset.issue));
+});
 
-  document.getElementById('lbClose').addEventListener('click', closeLightbox);
-  document.getElementById('lightbox').addEventListener('click', e => {
-    if (e.target === document.getElementById('lightbox')) closeLightbox();
-  });
+// ── TOC ──
+function openTOC() {
+  document.getElementById('tocOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
-  document.getElementById('lbPrev').addEventListener('click', e => {
-    e.stopPropagation();
-    const pages = COMIC_DATA[lbIssue].pages;
-    lbIndex = (lbIndex - 1 + pages.length) % pages.length;
-    updateLightbox();
-  });
+function closeTOC() {
+  document.getElementById('tocOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
-  document.getElementById('lbNext').addEventListener('click', e => {
-    e.stopPropagation();
-    const pages = COMIC_DATA[lbIssue].pages;
-    lbIndex = (lbIndex + 1) % pages.length;
-    updateLightbox();
-  });
+document.getElementById('tocBtn').addEventListener('click', openTOC);
+document.getElementById('tocClose').addEventListener('click', closeTOC);
+document.getElementById('tocOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('tocOverlay')) closeTOC();
+});
 
-  // Keyboard nav
-  document.addEventListener('keydown', e => {
-    if (!document.getElementById('lightbox').classList.contains('open')) return;
-    if (e.key === 'ArrowRight') document.getElementById('lbNext').click();
-    if (e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
-    if (e.key === 'Escape') closeLightbox();
-  });
-
-  // Init
-  renderPages();
+// ── INIT ──
+buildCharGrid();
+buildIssuePages();
 </script>
 </body>
 </html>
